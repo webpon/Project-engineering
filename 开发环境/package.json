@@ -1,0 +1,16 @@
+{
+  "name": "development",
+  "version": "1.0.0",
+  "description": "开发环境搭建",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack",
+    "serve": "webpack-dev-server"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "webpack": "^4.41.6",
+    "webpack-cli": "^3.3.11"
+  }
+}
