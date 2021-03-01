@@ -4,4 +4,4 @@ import './src/css/index.less';
 import './src/others/iconfont.css'
 document.write('hello world')
 console.log(res);
-console.log('2323');
+console.log('21323');

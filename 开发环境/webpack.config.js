@@ -9,9 +9,9 @@ module.exports = {
   // 输出配置 
   output: {
     // 输出文件名
-    filename: 'built.js',
+    filename: 'js/built.js',
     // 输出文件路径
-    path: resolve(__dirname, 'build/js')
+    path: resolve(__dirname, 'build')
   },
   // loader配置
   module: {
@@ -69,7 +69,7 @@ module.exports = {
           // [hash:10]取图片的hash的前10位
           //[name]是指原来的名字
           // [ext]取文件原来扩展名
-          name: '../img/[name].[hash:8].[ext]'
+          name: 'img/[name].[hash:8].[ext]'
         }
       },
        //!处理html
@@ -91,7 +91,7 @@ module.exports = {
           // [hash:10]取图片的hash的前10位
           //[name]是指原来的名字
           // [ext]取文件原来扩展名
-          name: '../media/[name].[hash:8].[ext]'
+          name: 'media/[name].[hash:8].[ext]'
         }
       },
     ]
@@ -107,9 +107,23 @@ module.exports = {
       // 复制 './src/index.html' 文件，并自动引入打包输出的所有资源（JS/CSS）,默认复制到output目录
       template: './src/index.html',
       //输出路径以及重命名
-      filename:'../index.html'
+      filename:'index.html'
     })
   ],
   //开发环境 
-  mode: 'development'
+  mode: 'development',
+  // 开发服务器 devServer：用来自动化（自动编译，自动打开浏览器，自动刷新浏览器~~）
+  // 特点：只会在内存中编译打包，不会有任何输出
+  // 启动devServer指令为：npx webpack-dev-server
+  devServer: {
+    // 这需要和项目构建后路径一样，把打包生成的目录设为根目录，只不过是模拟生成的而已
+    contentBase: resolve(__dirname,'build'),
+    // 启动gzip压缩
+    compress: true,
+    // 端口号
+    port: 3000,
+    // 自动打开浏览器
+    open: true
+  }
+  
 };
