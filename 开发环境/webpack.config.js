@@ -1,5 +1,7 @@
-const { resolve } = require('path');
 // node 内置核心模块，用来处理路径问题
+const { resolve } = require('path');
+//打包html文件
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
   //入口
   entry: './main.js',
@@ -11,6 +13,7 @@ module.exports = {
     // 输出文件路径
     path: resolve(__dirname, 'build/js')
   },
+  // loader配置
   module: {
     rules: [
       // 详细loader配置
@@ -40,6 +43,17 @@ module.exports = {
       }
     ]
   },
+  //插件配置
+  plugins: [
+    // plugins的配置
+    // html-webpack-plugin
+    // 功能：默认会创建一个空的HTML，自动引入打包输出的所有资源（JS/CSS）
+    // 需求：需要有结构的HTML文件
+    new HtmlWebpackPlugin({
+      // 复制 './src/index.html' 文件，并自动引入打包输出的所有资源（JS/CSS）,默认复制到output目录
+      template: './src/index.html'
+    })
+  ],
   //开发环境 
   mode: 'development'
 };
