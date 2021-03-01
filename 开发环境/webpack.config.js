@@ -51,7 +51,8 @@ module.exports = {
         test: /\.(jpg|png|gif)$/,
         // 使用一个loader
         // 下载 url-loader file-loader
-        // 当图片体积大于 8192 字节时，默认会使用 file- loader
+        // url- loader 允许你有条件地将文件转换为内联的 base - 64 URL(当文件小于给定的阈值) 
+        // 这会减少小文件的 HTTP 请求数。如果文件大于该阈值，会自动的交给 file - loader 处理。
         // （虽然代码没有配置 file - loader，但还是需要使用 npm i file - loader - D 安装），
         // 并且会将配置的选项传递给 file - loader（也就是说上面可以配置 name、outputPath 等选项）
         loader: 'url-loader',
@@ -64,10 +65,11 @@ module.exports = {
           // 解析时会出问题：[object Module]
           // 解决：关闭url-loader的es6模块化，使用commonjs解析
           esModule: false,
-          // 给图片进行重命名
+          // 输出路径以及名字
           // [hash:10]取图片的hash的前10位
+          //[name]是指原来的名字
           // [ext]取文件原来扩展名
-          name: '[hash:10].[ext]'
+          name: '../img/[name].[hash:8].[ext]'
         }
       },
        //!处理html
@@ -75,8 +77,23 @@ module.exports = {
       {
         test: /\.html$/,
         // 处理html文件的img图片（负责引入img，从而能被url-loader进行处理）
-        loader: 'html-loader'
-      }
+        loader: 'html-loader'   //0.5.5版本
+      },
+      //!处理其他资源
+      {
+        // 排除html|js|css|less|jpg|png|gif|vue资源
+        exclude: /\.(html|js|css|less|jpg|png|gif|vue)$/,
+        loader: 'file-loader',
+        options: {
+          // 当加载的图片小于limit时，会将图片编译成base64字符串形式
+          //当加载的土拍你大于limit时，需要使用file-loader模块进行加载
+          // 输出路径以及名字
+          // [hash:10]取图片的hash的前10位
+          //[name]是指原来的名字
+          // [ext]取文件原来扩展名
+          name: '../media/[name].[hash:8].[ext]'
+        }
+      },
     ]
   },
   //插件配置
@@ -88,7 +105,9 @@ module.exports = {
     //打包html模板
     new HtmlWebpackPlugin({
       // 复制 './src/index.html' 文件，并自动引入打包输出的所有资源（JS/CSS）,默认复制到output目录
-      template: './src/index.html'
+      template: './src/index.html',
+      //输出路径以及重命名
+      filename:'../index.html'
     })
   ],
   //开发环境 
