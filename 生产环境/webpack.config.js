@@ -62,9 +62,28 @@ module.exports = {
         test: /\.js$/,
         exclude: /node_modules/,
         loader: 'eslint-loader',
+        // 优先执行 
+        enforce: 'pre',
         options: {
           // 自动修复 eslint 的错误 
           fix: true
+        }
+      },
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        loader: 'babel-loader',
+        options: {
+          // npm install --save- dev babel - loader @babel/core @babel/preset - env @babel/polyfill core-js
+          // 预设：指示 babel 做怎么样的兼容性处理 
+          presets: [['@babel/preset-env', {
+            // 按需加载 
+            useBuiltIns: 'usage',
+            // 指定 core-js 版本 
+            corejs: { version: 3 },
+            // 指定兼容性做到哪个版本浏览器 
+            targets: { chrome: '60', firefox: '60', ie: '9', safari: '10', edge: '17' }
+          }]]
         }
       }
     ]
