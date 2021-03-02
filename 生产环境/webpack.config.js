@@ -5,6 +5,27 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 // 压缩 css 
 const OptimizeCssAssetsWebpackPlugin = require('optimize-css-assets-webpack-plugin')
+// 定义nodejs环境变量：决定使用browserslist的哪个环境,这个browserslist是处理js兼容性使用的
+process.env.NODE_ENV = 'production';
+//复用Loader
+const commonCssLoader = [
+  // 创建style标签，将样式放入
+  // 'style-loader', 
+  // 这个loader取代style-loader。作用：提取js中的css成单独文件
+  MiniCssExtractPlugin.loader,
+  // 将css文件整合到js文件中
+  'css-loader',
+  //!css兼容性处理
+  {
+    loader: 'postcss-loader',
+    options: {
+      ident: 'postcss',
+      plugins: () => [
+        // postcss 的插件
+        require('postcss-preset-env')()]
+    }
+  }
+]
 module.exports = {
   entry: './main.js',
   output: {
@@ -16,45 +37,12 @@ module.exports = {
       //!css处理
       {
         test: /\.css$/,
-        use: [
-          // 创建style标签，将样式放入
-          // 'style-loader', 
-          // 这个loader取代style-loader。作用：提取js中的css成单独文件
-          MiniCssExtractPlugin.loader,
-          // 将css文件整合到js文件中
-          'css-loader',
-          {
-            loader: 'postcss-loader',
-            options: {
-              ident: 'postcss',
-              plugins: () => [
-                // postcss 的插件
-                require('postcss-preset-env')()]
-            }
-          }
-        ]
+        use: [...commonCssLoader]
       },
       //!less处理
       {
         test: /\.less$/,
-        use: [
-          // 创建style标签，将样式放入
-          // 'style-loader', 
-          // 这个loader取代style-loader。作用：提取js中的css成单独文件
-          MiniCssExtractPlugin.loader,
-          // 将css文件整合到js文件中
-          'css-loader',
-          {
-            loader: 'postcss-loader',
-            options: {
-              ident: 'postcss',
-              plugins: () => [
-                // postcss 的插件
-                require('postcss-preset-env')()]
-            }
-          },
-          'less-loader'
-        ]
+        use: [...commonCssLoader,'less-loader']
       },
       //!js语法检查
       /*语法检查： eslint-loader eslint 注意：只检查自己写的源代码，第三方的库是不用检查的 
