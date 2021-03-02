@@ -18,7 +18,16 @@ module.exports = {
           // 这个loader取代style-loader。作用：提取js中的css成单独文件
           MiniCssExtractPlugin.loader,
           // 将css文件整合到js文件中
-          'css-loader'
+          'css-loader',
+          {
+            loader: 'postcss-loader',
+            options: {
+              ident: 'postcss',
+              plugins: () => [
+                // postcss 的插件
+                require('postcss-preset-env')()]
+            }
+          }
         ]
       },
       {
@@ -30,6 +39,15 @@ module.exports = {
           MiniCssExtractPlugin.loader,
           // 将css文件整合到js文件中
           'css-loader',
+          {
+            loader: 'postcss-loader',
+            options: {
+            ident: 'postcss', 
+            plugins: () => [
+                // postcss 的插件
+                require('postcss-preset-env')()]
+            }
+          },
           'less-loader'
         ]
       }
