@@ -1,7 +1,10 @@
 const { resolve } = require('path');
+//处理html模板
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+//把css从js抽离成单独文件
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-
+// 压缩 css 
+const OptimizeCssAssetsWebpackPlugin = require('optimize-css-assets-webpack-plugin')
 module.exports = {
   entry: './main.js',
   output: {
@@ -54,13 +57,17 @@ module.exports = {
     ]
   },
   plugins: [
+    //处理html模板
     new HtmlWebpackPlugin({
       template: './src/index.html'
     }),
+    //把css从js抽离成单独文件
     new MiniCssExtractPlugin({
       // 对输出的css文件进行重命名
       filename: 'css/built.css'
-    })
+    }),
+    // 压缩 css 
+    new OptimizeCssAssetsWebpackPlugin()
   ],
   mode: 'development'
 };
