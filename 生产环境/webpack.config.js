@@ -89,6 +89,21 @@ module.exports = {
             targets: { chrome: '60', firefox: '60', ie: '9', safari: '10', edge: '17' }
           }]]
         }
+      },
+      //!处理其他资源
+      {
+        exclude: /\.(js|css|less|html|jpg|png|gif|vue)/,
+        loader: 'file-loader',
+        options: {
+          // 当加载的图片小于limit时，会将图片编译成base64字符串形式
+          //当加载的土拍你大于limit时，需要使用file-loader模块进行加载
+          // [hash:10]取图片的hash的前10位
+          //[name]是指原来的名字
+          // [ext]取文件原来扩展名
+          name: '[name].[hash:8].[ext]',
+          // 输出文件夹，相对于build文件下
+          outputPath: 'media'
+        }
       }
     ]
   },
