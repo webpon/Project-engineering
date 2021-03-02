@@ -27,7 +27,7 @@ const commonCssLoader = [
   }
 ]
 module.exports = {
-  entry: './main.js',
+  entry: ['./main.js', './src/index.html'],
   output: {
     filename: 'js/built.js',
     path: resolve(__dirname, 'build')
@@ -42,7 +42,7 @@ module.exports = {
       //!less处理
       {
         test: /\.less$/,
-        use: [...commonCssLoader,'less-loader']
+        use: [...commonCssLoader, 'less-loader']
       },
       //!js语法检查
       /*语法检查： eslint-loader eslint 注意：只检查自己写的源代码，第三方的库是不用检查的 
