@@ -45,14 +45,27 @@ module.exports = {
           {
             loader: 'postcss-loader',
             options: {
-            ident: 'postcss', 
-            plugins: () => [
+              ident: 'postcss',
+              plugins: () => [
                 // postcss 的插件
                 require('postcss-preset-env')()]
             }
           },
           'less-loader'
         ]
+      },
+      /*语法检查： eslint-loader eslint 注意：只检查自己写的源代码，第三方的库是不用检查的 
+      npm install --save-dev eslint-loader eslint eslint-config-airbnb-base eslint-plugin-import
+      设置检查规则： package.json 中 eslintConfig 中设置~
+       "eslintConfig": { "extends": "airbnb-base" } airbnb --> eslint-config-airbnb-base eslint-plugin-import eslint */
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        loader: 'eslint-loader',
+        options: {
+          // 自动修复 eslint 的错误 
+          fix: true
+        }
       }
     ]
   },
