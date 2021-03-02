@@ -141,4 +141,5 @@ module.exports = {
   },
   //开发环境 
   mode: 'development',
+  devtool: 'eval-source-map'
 };

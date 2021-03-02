@@ -5,7 +5,7 @@ import './src/css/index.css';
 import './src/css/index.less';
 import './src/others/iconfont.css'
 document.write('hello world')
-console.log(res);
+console.log(res)();
 console.log('21323');
 //为了可以自动隔离js更新，我们使用
 if (module.hot) {
