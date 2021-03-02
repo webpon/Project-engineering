@@ -13,6 +13,7 @@ module.exports = {
   },
   module: {
     rules: [
+      //!css处理
       {
         test: /\.css$/,
         use: [
@@ -33,6 +34,7 @@ module.exports = {
           }
         ]
       },
+      //!less处理
       {
         test: /\.less$/,
         use: [
@@ -54,6 +56,7 @@ module.exports = {
           'less-loader'
         ]
       },
+      //!js语法检查
       /*语法检查： eslint-loader eslint 注意：只检查自己写的源代码，第三方的库是不用检查的 
       npm install --save-dev eslint-loader eslint eslint-config-airbnb-base eslint-plugin-import
       设置检查规则： package.json 中 eslintConfig 中设置~
@@ -69,6 +72,7 @@ module.exports = {
           fix: true
         }
       },
+      //!js兼容性处理
       {
         test: /\.js$/,
         exclude: /node_modules/,
@@ -89,17 +93,18 @@ module.exports = {
     ]
   },
   plugins: [
-    //处理html模板
+    //!处理html模板
     new HtmlWebpackPlugin({
       template: './src/index.html'
     }),
-    //把css从js抽离成单独文件
+    //!把css从js抽离成单独文件
     new MiniCssExtractPlugin({
       // 对输出的css文件进行重命名
       filename: 'css/built.css'
     }),
-    // 压缩 css 
+    //! 压缩 css 
     new OptimizeCssAssetsWebpackPlugin()
   ],
-  mode: 'development'
+  // 生产环境下会自动压缩 js 代码
+  mode: 'production'
 };
