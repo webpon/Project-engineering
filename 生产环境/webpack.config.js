@@ -95,7 +95,14 @@ module.exports = {
   plugins: [
     //!处理html模板
     new HtmlWebpackPlugin({
-      template: './src/index.html'
+      template: './src/index.html',
+      // 压缩 html 代码 
+      minify: {
+        // 移除空格 
+        collapseWhitespace: true,
+        // 移除注释
+        removeComments: true
+      }
     }),
     //!把css从js抽离成单独文件
     new MiniCssExtractPlugin({
